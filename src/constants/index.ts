@@ -17,5 +17,4 @@ export const tags:TagTypes[]=[
   { id: Math.random() * 1000, title: 'Education' },
   { id: Math.random() * 1000, title: 'Tutorial' },
   { id: Math.random() * 1000, title: 'Podcast' },
-
 ]

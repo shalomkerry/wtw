@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { mockVideos } from "../Data/mockData"
 import { cn } from "../lib/utils"
 import { VideoCard } from "./Videos"
 import { type Videos } from "../types"
+import cancelIcon from "../assets/x-circle.svg"
+import dice from "../assets/two-dice.svg"
 interface RandomVideoProp{
     previewRandomVideo:boolean,
     setPreviewRandomVideo:(preview:boolean)=>void
@@ -20,27 +22,25 @@ setRandomNum(randomNum)
 
   const handleButtonClick = () => {
     if (mockVideos.length) {
+    setTimeout(()=>{
       const index = Math.floor(Math.random() * mockVideos.length);
       setRandomItem(mockVideos[index]);
+    },200)
     }
   };
     const isVisible = ()=>{
         return previewRandomVideo?`visible`:`invisible`
     } 
-      const  getExactDuration = (duration:string)=>{
-       const timearray = duration.split(':')
-       const [hour, minute, second] = timearray
-       if (hour=='0'){
-        return (`${minute}:${second}`)
-       }
-       return duration
-    }
 
     return (
-    <div className={cn('w-[420px] absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-conic via-[#1E1F29]  from-0% to-[#2B2D3C] via-[100%] rounded-xl  h-[420px]',isVisible())} id="randomPart">
+    <div className={cn('mb-[500px] absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-conic via-[#1E1F29]  from-0% to-[#2B2D3C] via-[100%] rounded-xl max-w-[400px] p-7 flex flex-col items-center gap-3',isVisible())} id="randomPart">
+    <button onClick={()=>(setPreviewRandomVideo(false))} className={`hover:cursor-pointer hover:scale-120 text-white text-[13px] absolute top-1 right-0`}>
+    <img className=''src={cancelIcon} alt="cancelIcon" />
+    </button>
     <VideoCard video={randomItem}/>
-    <button onClick={handleButtonClick}>Get a random</button>
-    <button onClick={()=>(setPreviewRandomVideo(false))} className={`hover:cursor-pointer text-white text-[13px]`}>Exit</button>
+    <button className={`w-[200px] hover:cursor-pointer hover:scale-105 p-2 rounded-sm flex justify-around align-center bg-[#505D80] text-white`} onClick={handleButtonClick}>Get a random Video
+    <img className='w-7'src={dice} alt="dice" />
+    </button>
     </div>
 )
 }
