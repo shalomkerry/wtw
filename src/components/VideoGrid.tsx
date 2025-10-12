@@ -3,11 +3,11 @@ import { type Videos } from "../types"
 import { cn } from "../lib/utils";
 interface VideoGridProps{
     videos: Videos[]
-    isLoading:boolean
+    Loading:boolean
     previewRandomVideo:boolean
 }
-export const VideoContainer:React.FC<VideoGridProps> = ({videos,isLoading,previewRandomVideo})=>{
-    if(isLoading){
+export const VideoContainer:React.FC<VideoGridProps> = ({videos,Loading,previewRandomVideo})=>{
+    if(Loading){
         return (
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
                 {[...Array(8)].map((_,i)=>(

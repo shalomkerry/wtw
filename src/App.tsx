@@ -1,22 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
-import { mockVideos } from './Data/mockData'
 import {type Videos} from './types/index.ts'
 import { VideoContainer } from './components/VideoGrid'
 import { FilterVideos } from './components/FilterBar.tsx'
 import { RandomVideo } from './components/RandomVid.tsx'
 import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
+import { getData } from './service/fetch.ts'
 function App() {
-  const [data, setData] = useState<Videos[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const {data} = getData()
+  const [videos, setVideos] = useState<Videos[]>([])
+  const [Loading, setIsLoading] = useState<boolean>(true)
   const [page,setPage] = useState(1)
   const [selectedTag, setSelectedTag] = useState<string|null>(null)
   const [previewRandomVideo, setPreviewRandomVideo] = useState<boolean>(false)
   const paginationRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
   const VIDEOS_PER_PAGE = 24
-  const paginationLength = Math.ceil(mockVideos.length/VIDEOS_PER_PAGE)
+  const paginationLength = Math.ceil(videos.length/VIDEOS_PER_PAGE)
+
 
   function VideoRange(num:number){
       const num2 = (num*VIDEOS_PER_PAGE) 
@@ -24,26 +26,42 @@ function App() {
       return [num1,num2]
     }
 
+let mockVideos
+useEffect(() => {
+  if (!data) return;
+  mockVideos = data.data
+  setVideos((prev) => {
+    if (JSON.stringify(prev) !== JSON.stringify(data.data)) {
+      return data.data;
+    }
+    return prev;
+  });
+}, [data]);
 
+useEffect(()=>{
+  console.log(videos)
+},[selectedTag])
  function filterBasedOnTag(){
-  if(!selectedTag) return mockVideos
-  return mockVideos.filter(element=> element.tags===selectedTag)
+  if(!selectedTag) return data.data
+  let vid:Videos[]= data.data
+  return vid.filter(element=> element.tags===selectedTag)
  }
 
-
-useEffect(() => {
+useMemo(() => {
+  if(!data?.data) return 
   const [start, end] = VideoRange(page);
+  let currentVideos = data.data
+  
   if(selectedTag){
-    const videos = filterBasedOnTag()
-    return setData(videos.slice(start,end))
+    const currentVideos = filterBasedOnTag()
+    return setVideos(currentVideos.slice(start,end))
   }
-  setData(mockVideos.slice(start, end));
-}, [page, mockVideos]);
+  setVideos(currentVideos.slice(start, end));
+}, [page,selectedTag]);
     
 useEffect(()=>{
-
   const [start, end] = VideoRange(page);
-  setData(mockVideos.slice(start,end))
+  setVideos(videos.slice(start,end))
   setIsLoading(false)
  },[])
 
@@ -51,14 +69,13 @@ useEffect(()=>{
 
   const [start, end] = VideoRange(page);
   const filtered = filterBasedOnTag()
-  setData(filtered.slice(start,end))
+  setVideos(filtered.slice(start,end))
 },[selectedTag])
 
 return (
   <>
   <div className="flex justify-around m-5">
       <button className="hover:cursor-pointer text-white">Community</button>
-      <button className="hover:cursor-pointer text-[15px] text-[#ffff]">Community</button>
       <button onClick={()=>{
         const randomPart = document.getElementById('randomPart')
         if(randomPart){
@@ -69,13 +86,16 @@ return (
   </div>
  <FilterVideos selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
  <div className="" ref={videosRef}>
-  <VideoContainer isLoading={isLoading} videos={data} previewRandomVideo={previewRandomVideo}/>
+  <VideoContainer Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
  </div>
  <RandomVideo previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo} /> 
+ {videos.length>0?
+ <>
 <PaginationComponent ref={paginationRef} paginationLength={paginationLength} page={page} setPage={setPage}/>
- {data.length>0?
  <RandomPreview previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo}/>
- :''}
+</> 
+ :''
+ }
   </>
   )
 
