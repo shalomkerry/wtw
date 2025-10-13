@@ -8,7 +8,7 @@ import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
 function App() {
-  const {data,isLoading,error} = getData()
+  const {data,isLoading} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
   const [Loading, setIsLoading] = useState<boolean>(true)
   const [page,setPage] = useState(1)
