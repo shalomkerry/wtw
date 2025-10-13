@@ -1,7 +1,6 @@
 import { VideoCard } from "./Videos";
 import { type Videos } from "../types"
 import { cn } from "../lib/utils";
-import { useEffect } from "react";
 interface VideoGridProps{
     videos: Videos[]
     Loading:boolean

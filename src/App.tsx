@@ -26,11 +26,9 @@ function App() {
       return [num1,num2]
     }
 
-let mockVideos;
 
 useEffect(() => {
   if (!data) return;
-  mockVideos = data.data
   setVideos((prev) => {
     if (JSON.stringify(prev) !== JSON.stringify(data.data)) {
       return data.data;
