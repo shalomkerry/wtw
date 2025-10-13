@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react"
-import { mockVideos } from "../Data/mockData"
 import { cn } from "../lib/utils"
 import { VideoCard } from "./Videos"
 import { type Videos } from "../types"
 import cancelIcon from "../assets/x-circle.svg"
 import dice from "../assets/two-dice.svg"
 interface RandomVideoProp{
+
+    videos:Videos[]
     previewRandomVideo:boolean,
     setPreviewRandomVideo:(preview:boolean)=>void
 }
 
-export function RandomVideo({previewRandomVideo,setPreviewRandomVideo}:RandomVideoProp){
+export function RandomVideo({videos,previewRandomVideo,setPreviewRandomVideo}:RandomVideoProp){
+
+  const [randomItem, setRandomItem] = useState<Videos>(videos[1])
 
 useEffect(()=>{
-const randomNum =  Math.floor(Math.random() * mockVideos.length);
-setRandomNum(randomNum)
-},[])
-
-  const [randomNum, setRandomNum] = useState<number>(3);
-  const [randomItem, setRandomItem] = useState<Videos>(mockVideos[randomNum]);
+  if(videos && videos.length>0){
+const randomNum =  Math.floor(Math.random() * videos?.length);
+setRandomItem(videos[randomNum])
+  }
+},[videos])
 
   const handleButtonClick = () => {
-    if (mockVideos.length) {
+    if (videos?.length) {
     setTimeout(()=>{
-      const index = Math.floor(Math.random() * mockVideos.length);
-      setRandomItem(mockVideos[index]);
+      const index = Math.floor(Math.random() * videos?.length);
+      setRandomItem(videos[index]);
     },200)
     }
   };
@@ -33,6 +35,7 @@ setRandomNum(randomNum)
     } 
 
     return (
+      
     <div className={cn('mb-[500px] absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-conic via-[#1E1F29]  from-0% to-[#2B2D3C] via-[100%] rounded-xl max-w-[400px] p-7 flex flex-col items-center gap-3',isVisible())} id="randomPart">
     <button onClick={()=>(setPreviewRandomVideo(false))} className={`hover:cursor-pointer hover:scale-120 text-white text-[13px] absolute top-1 right-0`}>
     <img className=''src={cancelIcon} alt="cancelIcon" />
@@ -44,3 +47,4 @@ setRandomNum(randomNum)
     </div>
 )
 }
+

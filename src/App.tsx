@@ -8,7 +8,7 @@ import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
 function App() {
-  const {data} = getData()
+  const {data,isLoading,error} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
   const [Loading, setIsLoading] = useState<boolean>(true)
   const [page,setPage] = useState(1)
@@ -17,7 +17,7 @@ function App() {
   const paginationRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
   const VIDEOS_PER_PAGE = 24
-  const paginationLength = Math.ceil(videos.length/VIDEOS_PER_PAGE)
+  const paginationLength = Math.ceil(videos?.length/VIDEOS_PER_PAGE)
 
 
   function VideoRange(num:number){
@@ -26,7 +26,8 @@ function App() {
       return [num1,num2]
     }
 
-let mockVideos
+let mockVideos;
+
 useEffect(() => {
   if (!data) return;
   mockVideos = data.data
@@ -38,12 +39,9 @@ useEffect(() => {
   });
 }, [data]);
 
-useEffect(()=>{
-  console.log(videos)
-},[selectedTag])
  function filterBasedOnTag(){
-  if(!selectedTag) return data.data
-  let vid:Videos[]= data.data
+  if(!selectedTag) return data?.data
+  let vid:Videos[]= data?.data
   return vid.filter(element=> element.tags===selectedTag)
  }
 
@@ -51,12 +49,12 @@ useMemo(() => {
   if(!data?.data) return 
   const [start, end] = VideoRange(page);
   let currentVideos = data.data
-  
+  setVideos(currentVideos.slice(start, end));
+
   if(selectedTag){
     const currentVideos = filterBasedOnTag()
     return setVideos(currentVideos.slice(start,end))
   }
-  setVideos(currentVideos.slice(start, end));
 }, [page,selectedTag]);
     
 useEffect(()=>{
@@ -66,14 +64,15 @@ useEffect(()=>{
  },[])
 
 useEffect(()=>{
-
   const [start, end] = VideoRange(page);
   const filtered = filterBasedOnTag()
-  setVideos(filtered.slice(start,end))
+  setVideos(filtered?.slice(start,end))
 },[selectedTag])
 
 return (
   <>
+  {data?
+    <>
   <div className="flex justify-around m-5">
       <button className="hover:cursor-pointer text-white">Community</button>
       <button onClick={()=>{
@@ -88,13 +87,20 @@ return (
  <div className="" ref={videosRef}>
   <VideoContainer Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
  </div>
- <RandomVideo previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo} /> 
- {videos.length>0?
+ {videos?.length>0?
  <>
+ <RandomVideo videos={data.data} previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo} /> 
 <PaginationComponent ref={paginationRef} paginationLength={paginationLength} page={page} setPage={setPage}/>
- <RandomPreview previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo}/>
-</> 
- :''
+ <RandomPreview  previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo}/>
+</>:''} 
+ </>
+ :isLoading?
+      <div className="flex mt-5 items-center justify-center duration-500">
+      <div className="bg-[#141414] text-white rounded-2xl p-8 shadow-lg flex flex-col items-center justify-center gap-3">
+        <p className="text-xl font-semibold">...Loading</p  >
+      </div>
+    </div>
+ :'' 
  }
   </>
   )

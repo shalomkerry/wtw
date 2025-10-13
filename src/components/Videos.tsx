@@ -5,6 +5,14 @@ interface VideoCardProps{
 }
 export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
     const [isHovered,setIsHovered] = useState(false)
+
+     if (!video) {
+    return (
+      <div className="p-4 text-center text-gray-400">
+        No video available.
+      </div>
+    );
+  }
     const formatViews = (views:number)=>{
         if(views >=1000000){
             return `${(views/1000000).toFixed(0)}M`
@@ -47,19 +55,20 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
     }
 
     return(
+        
         <div className="rounded-xl text-white shadow transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg cursor:pointer hover:"
         onMouseEnter= {()=>setIsHovered(true)} 
         onMouseLeave= {()=>setIsHovered(false)} 
         >
             <div className="relative">
-                    <a href={`https://youtu.be/${video.message}`} target="_blank">
+                    <a href={`https://youtu.be/${video?.message}`} target="_blank">
                     <img className='rounded-t-xl' src={video?.thumbnail} alt="video-thumbnail"/>
                     </a>
                     <p className="bg-[#00000099] absolute bottom-1  right-1 w-max p-0.5  font-medium text-xs  text-white rounded-xl ">{getExactDuration(video.duration)}</p>
 
         {isHovered && (
 
-                    <a href={`https://youtu.be/${video.message}`} target="_blank">
+                    <a href={`https://youtu.be/${video?.message}`} target="_blank">
                 <div className="absolute inset-0 bg-blend-color bg-opacity-20 flex items-center justify-center">
 
                     <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
@@ -76,17 +85,17 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
                 )}
 
             </div>
-            <p className={`mb-0.5 select-none cursor-pointer line-clamp-2`} title={video.title}>{video.title}</p>          
+            <p className={`mb-0.5 select-none cursor-pointer line-clamp-2`} title={video?.title}>{video?.title}</p>          
             <div className="flex gap-2">
-            <p className='text-[#949494] text-[13px]'>{formatViews(Number(video.view_count))} views • {getRelativeTime(video.published_at)}</p>
-            <button className='text-[10px] bg-[#141414] text-white p-1 rounded-[2px]'>#{video.tags}</button>
+            <p className='text-[#949494] text-[13px]'>{formatViews(Number(video?.view_count))} views • {getRelativeTime(video?.published_at)}</p>
+            <button className='text-[10px] bg-[#141414] text-white p-1 rounded-[2px]'>#{video?.tags}</button>
            </div>
 
            <div className="mt-2 flex w-max justify-around gap-2">
-            <img  src={video.channel_thumbnail} className='rounded-full size-8 cursor-pointer'alt="" />
+            <img  src={video?.channel_thumbnail} className='rounded-full size-8 cursor-pointer'alt="" />
             <div className="flex-col">
-            <p className="text-[15px] self-center">{video.channel_name}</p>
-            <p className="text-[#949494] text-[11px]">{formatViews(Number(video.likes))} subscribers</p>
+            <p className="text-[15px] self-center">{video?.channel_name}</p>
+            <p className="text-[#949494] text-[11px]">{formatViews(Number(video?.subscriber_count))} subscribers</p>
             </div>
             <div className="flex-row">
             </div>

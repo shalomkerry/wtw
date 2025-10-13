@@ -10,6 +10,7 @@ export type Videos =  {
     published_at:string,
     view_count:string,
     likes:string
+    subscriber_count:string
 } 
 export interface TagTypes {
   id: number;

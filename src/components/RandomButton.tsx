@@ -1,4 +1,3 @@
-
 interface randomButtonProp{
     previewRandomVideo:boolean
     setPreviewRandomVideo:(preview:boolean)=>void

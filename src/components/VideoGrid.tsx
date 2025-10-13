@@ -1,6 +1,7 @@
 import { VideoCard } from "./Videos";
 import { type Videos } from "../types"
 import { cn } from "../lib/utils";
+import { useEffect } from "react";
 interface VideoGridProps{
     videos: Videos[]
     Loading:boolean
@@ -23,17 +24,21 @@ export const VideoContainer:React.FC<VideoGridProps> = ({videos,Loading,previewR
             </div>
         )
     }
-    if(videos.length===0){
+
+    if(videos?.length===0 || !videos){
         return (
-            <div className="bg-black">
-                <h2 className="text-white">There is nothing</h2>
-            </div>
+              <div className="flex mt-5 items-center justify-center duration-500">
+      <div className="bg-[#141414] text-white rounded-2xl p-8 shadow-lg flex flex-col items-center justify-center gap-3">
+        <h2 className="text-xl font-semibold">No videos available</h2>
+        <p className="text-gray-400 text-sm">Try selecting another tag or refresh the page.</p>
+      </div>
+    </div>
         )
     }
     return(
         <div className={cn(`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-12 gap-6`,previewRandomVideo?`blur-sm`:'')}>
             {
-            videos.map((video)=>(
+            videos?.map((video)=>(
             <VideoCard key={video.id} video={video}/>
             ))
             }
