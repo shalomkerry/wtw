@@ -17,7 +17,7 @@ function App() {
   const paginationRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
   const VIDEOS_PER_PAGE = 24
-  const paginationLength = Math.ceil(videos?.length/VIDEOS_PER_PAGE)
+  const paginationLength = Math.ceil(data?.data?.length/VIDEOS_PER_PAGE)
 
 
   function VideoRange(num:number){
