@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import {type Videos} from './types/index.ts'
 import { VideoContainer } from './components/VideoGrid'
@@ -12,6 +12,7 @@ function App() {
   const [videos, setVideos] = useState<Videos[]>([])
   const [Loading, setIsLoading] = useState<boolean>(true)
   const [page,setPage] = useState(1)
+  const [paginationVisible,setVisibilityPagination] = useState(true)
   const [selectedTag, setSelectedTag] = useState<string|null>(null)
   const [previewRandomVideo, setPreviewRandomVideo] = useState<boolean>(false)
   const paginationRef = useRef<HTMLDivElement>(null)
@@ -43,21 +44,23 @@ useEffect(() => {
   return vid.filter(element=> element.tags===selectedTag)
  }
 
-useMemo(() => {
+useEffect(() => {
   if(!data?.data) return 
-  const [start, end] = VideoRange(page);
-  let currentVideos = data.data
-  setVideos(currentVideos.slice(start, end));
 
-  if(selectedTag){
-    const currentVideos = filterBasedOnTag()
-    return setVideos(currentVideos.slice(start,end))
+  const filteredVideos = selectedTag ? filterBasedOnTag() : data.data 
+  const [start, end] = VideoRange(page);
+
+  setVideos(filteredVideos.slice(start, end));
+
+  if(filteredVideos.length<VIDEOS_PER_PAGE){
+    setVisibilityPagination(false)
+  }else{
+  setVisibilityPagination(true)
   }
-}, [page,selectedTag]);
+
+}, [page,selectedTag,data]);
     
 useEffect(()=>{
-  const [start, end] = VideoRange(page);
-  setVideos(videos.slice(start,end))
   setIsLoading(false)
  },[])
 
@@ -88,7 +91,10 @@ return (
  {videos?.length>0?
  <>
  <RandomVideo videos={data.data} previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo} /> 
-<PaginationComponent ref={paginationRef} paginationLength={paginationLength} page={page} setPage={setPage}/>
+ {paginationVisible?
+<PaginationComponent ref={paginationRef} paginationLength={paginationLength} page={page} setPage={setPage} />
+:''
+}
  <RandomPreview  previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo}/>
 </>:''} 
  </>
