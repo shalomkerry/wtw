@@ -7,7 +7,7 @@ interface VideoFilterProp{
 }
 export function FilterVideos({selectedTag,setSelectedTag}:VideoFilterProp){
 const isActive = (tag:string)=>{
-    return selectedTag === tag ?"bg-white text-black" :"hover:text-white"
+    return selectedTag === tag ?"bg-white text-black text-base" :"hover:text-white"
 }
 
 const isAllActive = ()=>{

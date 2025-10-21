@@ -68,6 +68,15 @@ useEffect(()=>{
   const [start, end] = VideoRange(page);
   const filtered = filterBasedOnTag()
   setVideos(filtered?.slice(start,end))
+
+  if(selectedTag && page>1){
+    const [start,end] = VideoRange(1)
+     const filtered = filterBasedOnTag()
+     setVideos(filtered.slice(start,end))
+  }
+  if(!selectedTag){
+
+  }
 },[selectedTag])
 
 return (
@@ -82,7 +91,7 @@ return (
           randomPart.scrollIntoView({behavior:"smooth"})
         }
         setPreviewRandomVideo(true)
-        }}className="p-2 bg-white rounded-[6px] hover:cursor-pointer hover:scale-110">Random Video</button>
+        }}className="p-2 bg-white text-[18px] rounded-[6px] hover:cursor-pointer hover:scale-110">Random Video</button>
   </div>
  <FilterVideos selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
  <div className="" ref={videosRef}>
