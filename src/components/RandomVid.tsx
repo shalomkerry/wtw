@@ -3,7 +3,7 @@ import { cn } from "../lib/utils"
 import { VideoCard } from "./Videos"
 import { type Videos } from "../types"
 import cancelIcon from "../assets/x-circle.svg"
-import dice from "../assets/two-dice.svg"
+import dice from "../assets/dice-solid-full(1).svg"
 interface RandomVideoProp{
 
     videos:Videos[]

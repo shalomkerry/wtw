@@ -7,6 +7,7 @@ import { RandomVideo } from './components/RandomVid.tsx'
 import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
+import dice from "./assets/dice-solid-full(1).svg"
 function App() {
   const {data,isLoading} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
@@ -84,14 +85,19 @@ return (
   {data?
     <>
   <div className="flex justify-around m-5">
-      <button className="hover:cursor-pointer text-white">Community</button>
-      <button onClick={()=>{
+      <button className="hover:cursor-pointer  text-white">Community</button>
+      <button 
+      onClick={()=>{
         const randomPart = document.getElementById('randomPart')
         if(randomPart){
           randomPart.scrollIntoView({behavior:"smooth"})
         }
         setPreviewRandomVideo(true)
-        }}className="p-2 bg-white text-[18px] rounded-[6px] hover:cursor-pointer hover:scale-110">Random Video</button>
+        }} 
+        className="p-2 bg-white text-[17px] gap-1.5 flex flex-row-reverse items-center justify-center rounded-[6px] hover:cursor-pointer hover:scale-110">
+        <p>Random Video</p> 
+        <img src={dice} className="w-10" alt="" /> 
+        </button>
   </div>
  <FilterVideos selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
  <div className="" ref={videosRef}>

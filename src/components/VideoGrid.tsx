@@ -35,7 +35,7 @@ export const VideoContainer:React.FC<VideoGridProps> = ({videos,Loading,previewR
         )
     }
     return(
-        <div className={cn(`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-12 gap-6`,previewRandomVideo?`blur-sm`:'')}>
+        <div className={cn(`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-12 gap-6`,previewRandomVideo?`blur-lg`:'')}>
             {
             videos?.map((video)=>(
             <VideoCard key={video.id} video={video}/>
