@@ -3,7 +3,7 @@ import { useState } from "react"
 interface VideoCardProps{
     video:Videos
 }
-export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
+export const PopVideo:React.FC<VideoCardProps> = ({video})=>{
     const [isHovered,setIsHovered] = useState(false)
 
      if (!video) {
@@ -62,36 +62,26 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
         >
             <div className="relative">
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
-                    <img className='rounded-t-xl' src={video?.thumbnail} alt="video-thumbnail"/>
+                    <img className='rounded-t-xl my-4' src={video?.thumbnail} alt="video-thumbnail"/>
                     </a>
                     <p className="bg-[#00000099] absolute bottom-1  right-1 w-max p-0.5  font-medium text-xs  text-white rounded-xl ">{getExactDuration(video.duration)}</p>
 
         {isHovered && (
-
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
                 <div className="absolute inset-0 bg-blend-color bg-opacity-20 flex items-center justify-center">
-
-                    <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
-                    <svg
-                        className="w-6 h-6 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path d="M8 5v10l8-5-8-5z" />
-                    </svg>
-                    </div>
+                    <img className='rounded-t-xl my-4' src={video?.thumbnail} alt="video-thumbnail"/>
                 </div>
                 </a>
                 )}
 
             </div>
             <p className={`mb-0.5 select-none cursor-pointer line-clamp-2`} title={video?.title}>{video?.title}</p>          
-            <div className="flex gap-2">
+            <div className="flex gap-5">
             <p className='text-[#949494] text-[13px]'>{formatViews(Number(video?.view_count))} views • {getRelativeTime(video?.published_at)}</p>
             <button className='text-[10px] bg-[#141414] text-white p-1 rounded-[2px]'>#{video?.tags}</button>
            </div>
 
-           <div className="mt-2 flex w-max justify-around gap-2">
+           <div className="flex w-max justify-around gap-2 mt-2 mb-5">
             <img  src={video?.channel_thumbnail} className='rounded-full size-8 cursor-pointer'alt="" />
             <div className="flex-col">
             <p className="text-[15px] self-center">{video?.channel_name}</p>

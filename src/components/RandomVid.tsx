@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { cn } from "../lib/utils"
-import { VideoCard } from "./Videos"
+import { PopVideo } from './Video-Card.tsx'
 import { type Videos } from "../types"
 import cancelIcon from "../assets/x-circle.svg"
-import dice from "../assets/dice-solid-full(1).svg"
+import dice from "../assets/dice.png"
 interface RandomVideoProp{
 
     videos:Videos[]
@@ -40,7 +40,7 @@ setRandomItem(videos[randomNum])
     <button onClick={()=>(setPreviewRandomVideo(false))} className={`hover:cursor-pointer hover:scale-120 text-white text-[13px] absolute top-1 right-0`}>
     <img className=''src={cancelIcon} alt="cancelIcon" />
     </button>
-    <VideoCard video={randomItem}/>
+    <PopVideo  video={randomItem}/>
     <button className={`w-[200px] hover:cursor-pointer hover:scale-105 p-2 rounded-sm flex justify-around align-center bg-[#505D80] text-white`} onClick={handleButtonClick}>Get a random Video
     <img className='w-7'src={dice} alt="dice" />
     </button>

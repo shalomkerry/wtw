@@ -56,9 +56,10 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
 
     return(
         
-        <div className="rounded-xl text-white shadow transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg cursor:pointer hover:"
+        <div className={`rounded-sm text-white shadow transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg  overflow-hidden cursor:pointer ${isHovered?'hover:shadow-neutral-950':''}`}
         onMouseEnter= {()=>setIsHovered(true)} 
         onMouseLeave= {()=>setIsHovered(false)} 
+        onClick={()=>window.open(`https://youtu.be/dQw4w9WgXcQ`,'_blank')}
         >
             <div className="relative">
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
@@ -71,19 +72,16 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
                 <div className="absolute inset-0 bg-blend-color bg-opacity-20 flex items-center justify-center">
 
-                    <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
-                    <svg
-                        className="w-6 h-6 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path d="M8 5v10l8-5-8-5z" />
-                    </svg>
+                    <div className="overflow-hidden w-full h-full  rounded-t-xl flex items-center justify-center">
+                <iframe width='max-width' height='auto' className=' w-[100%]  h-100%'src={`https://www.youtube.com/embed/${video.message}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin
+                `} 
+                allow="autoplay,encrypted-media"
+                ></iframe>
                     </div>
                 </div>
                 </a>
-                )}
 
+                )}
             </div>
             <p className={`mb-0.5 select-none cursor-pointer line-clamp-2`} title={video?.title}>{video?.title}</p>          
             <div className="flex gap-2">
@@ -91,7 +89,7 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
             <button className='text-[10px] bg-[#141414] text-white p-1 rounded-[2px]'>#{video?.tags}</button>
            </div>
 
-           <div className="mt-2 flex w-max justify-around gap-2">
+           <div className="mt-2 p-1 flex w-max justify-around gap-2">
             <img  src={video?.channel_thumbnail} className='rounded-full size-8 cursor-pointer'alt="" />
             <div className="flex-col">
             <p className="text-[15px] self-center">{video?.channel_name}</p>

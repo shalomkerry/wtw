@@ -19,7 +19,7 @@ choose your next watch!</p>
             }
             setPreviewRandomVideo(true)
             }} className="p-2 bg-white text-[17px] gap-1.5 flex flex-row-reverse items-center justify-center rounded-[6px] hover:cursor-pointer hover:scale-110">Random Video
-            <img src={dice} className='w-10' alt="" /> 
+            <img src={dice} className='w-7' alt="" /> 
             </button>
   </div>
         </div>
