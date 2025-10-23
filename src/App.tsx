@@ -77,7 +77,7 @@ return (
   {data?
     <>
   <div className="flex justify-around m-5">
-      <button className="hover:cursor-pointer text-white">Community</button>
+      <button className="hover:cursor-pointer text-white">SceniusTube</button>
       <button 
       onClick={()=>{
         const randomPart = document.getElementById('randomPart')
