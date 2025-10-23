@@ -20,5 +20,6 @@ export interface TagTypes {
 
 export interface Creators{
   id: number;
-  name:string
+  name:string;
+  link:string;
 }
