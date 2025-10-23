@@ -12,7 +12,8 @@ export const mockVideos:Videos[] = [
     "published_at": "2011,02,24",
     "view_count": "248764138",
     "likes":"200000",
-    "subscriber_count":"4000000"
+    "subscriber_count":"4000000",
+    'creator':'Shalom'
   },
 
   {
@@ -27,7 +28,8 @@ export const mockVideos:Videos[] = [
     "published_at": "2024,03,06",
     "view_count": "10053309",
     "likes":"200000",
-    "subscriber_count":"4000000"
+    "subscriber_count":"4000000",
+    'creator':'Shalom'
 
   },
 

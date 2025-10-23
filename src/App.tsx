@@ -8,6 +8,7 @@ import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
 import dice from "./assets/dice-solid-full(1).svg"
+import { Analytics } from "@vercel/analytics/next"
 function App() {
   const {data,isLoading} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
@@ -15,6 +16,7 @@ function App() {
   const [page,setPage] = useState(1)
   const [paginationVisible,setVisibilityPagination] = useState(true)
   const [selectedTag, setSelectedTag] = useState<string|null>(null)
+  const [selectedCreator,setCreator] = useState<string|null>(null)
   const [previewRandomVideo, setPreviewRandomVideo] = useState<boolean>(false)
   const paginationRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
@@ -39,53 +41,43 @@ useEffect(() => {
   });
 }, [data]);
 
- function filterBasedOnTag(){
-  if(!selectedTag) return data?.data
-  let vid:Videos[]= data?.data
-  return vid.filter(element=> element.tags===selectedTag)
- }
+useEffect(()=>{
+  setIsLoading(false)
+},[])
+
+useEffect(()=>{
+  setPage(1)
+},[selectedTag,selectedCreator])
 
 useEffect(() => {
   if(!data?.data) return 
+  let filteredVideos:Videos[] = data.data
+  if(selectedTag){
+    filteredVideos = filteredVideos.filter(element=>element.tags==selectedTag)
+  }
 
-  const filteredVideos = selectedTag ? filterBasedOnTag() : data.data 
-  const [start, end] = VideoRange(page);
-
-  setVideos(filteredVideos.slice(start, end));
-
-  if(filteredVideos.length<VIDEOS_PER_PAGE){
-    setVisibilityPagination(false)
+  if(selectedCreator){
+    filteredVideos = filteredVideos.filter(element=>element.creator==selectedCreator)
+  }
+ 
+  if(filteredVideos.length>VIDEOS_PER_PAGE){
+    setVisibilityPagination(true)
+    const [start,end] = VideoRange(page)
+    setVideos(filteredVideos.slice(start,end))
   }else{
-  setVisibilityPagination(true)
+    setVisibilityPagination(false)
+    setVideos(filteredVideos)
   }
 
-}, [page,selectedTag,data]);
-    
-useEffect(()=>{
-  setIsLoading(false)
- },[])
-
-useEffect(()=>{
-  const [start, end] = VideoRange(page);
-  const filtered = filterBasedOnTag()
-  setVideos(filtered?.slice(start,end))
-
-  if(selectedTag && page>1){
-    const [start,end] = VideoRange(1)
-     const filtered = filterBasedOnTag()
-     setVideos(filtered.slice(start,end))
-  }
-  if(!selectedTag){
-
-  }
-},[selectedTag])
+}, [page,selectedTag,selectedCreator,data]);
 
 return (
   <>
   {data?
     <>
+    <Analytics/>
   <div className="flex justify-around m-5">
-      <button className="hover:cursor-pointer  text-white">Community</button>
+      <button className="hover:cursor-pointer text-white">Community</button>
       <button 
       onClick={()=>{
         const randomPart = document.getElementById('randomPart')
@@ -96,10 +88,10 @@ return (
         }} 
         className="p-2 bg-white text-[17px] gap-1.5 flex flex-row-reverse items-center justify-center rounded-[6px] hover:cursor-pointer hover:scale-110">
         <p>Random Video</p> 
-        <img src={dice} className="w-10" alt="" /> 
+        <img src={dice} className="w-6" alt="" /> 
         </button>
   </div>
- <FilterVideos selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
+ <FilterVideos selectedCreator={selectedCreator} setCreator={setCreator} selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
  <div className="" ref={videosRef}>
   <VideoContainer Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
  </div>

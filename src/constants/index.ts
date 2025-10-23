@@ -1,5 +1,5 @@
 import { type TagTypes } from "../types/index.ts"
-
+import { type Creators } from "../types/index.ts"
 export const tags:TagTypes[]=[
   { id: Math.random() * 1000, title: 'Music' },
   { id: Math.random() * 1000, title: 'Tech' },
@@ -17,4 +17,16 @@ export const tags:TagTypes[]=[
   { id: Math.random() * 1000, title: 'Education' },
   { id: Math.random() * 1000, title: 'Tutorial' },
   { id: Math.random() * 1000, title: 'Podcast' },
+]
+
+export const creators:Creators[] = [
+  {id: Math.random() * 1000, name:'Dagmawi Babi'},
+  {id: Math.random() * 1000, name:'Tech Nerd'},
+  {id: Math.random() * 1000, name:'Me Says'},
+  {id: Math.random() * 1000, name:'Robi makes stuff'},
+  {id: Math.random() * 1000, name:'Meron'},
+  {id: Math.random() * 1000, name:'Such is Life'},
+  {id: Math.random() * 1000, name:'Frectonz'},
+  {id: Math.random() * 1000, name:'Yohannes Haile'},
+  {id: Math.random() * 1000, name:'Shalom'}
 ]
