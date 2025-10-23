@@ -8,6 +8,7 @@ import { RandomPreview } from './components/RandomButton.tsx'
 import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
 import dice from "./assets/dice-solid-full(1).svg"
+import { Analytics } from "@vercel/analytics/next"
 function App() {
   const {data,isLoading} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
@@ -74,6 +75,7 @@ return (
   <>
   {data?
     <>
+    <Analytics/>
   <div className="flex justify-around m-5">
       <button className="hover:cursor-pointer text-white">Community</button>
       <button 
