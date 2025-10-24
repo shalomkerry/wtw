@@ -59,7 +59,7 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
         <div className={`rounded-sm text-white shadow transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg  overflow-hidden cursor:pointer ${isHovered?'hover:shadow-neutral-950':''}`}
         onMouseEnter= {()=>setIsHovered(true)} 
         onMouseLeave= {()=>setIsHovered(false)} 
-        onClick={()=>window.open(`https://youtu.be/dQw4w9WgXcQ`,'_blank')}
+        onClick={()=>window.open(`https://youtu.be/${video.message}`,'_blank')}
         >
             <div className="relative">
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
@@ -70,11 +70,10 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
         {isHovered && (
 
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
-                <div className="absolute inset-0 bg-blend-color bg-opacity-20 flex items-center justify-center">
+                <div className="absolute inset-0 w-[100%] h-[100%] bg-blend-color bg-opacity-20 flex items-center justify-center">
 
-                    <div className="overflow-hidden w-full h-full  rounded-t-xl flex items-center justify-center">
-                <iframe width='max-width' height='auto' className=' w-[100%]  h-100%'src={`https://www.youtube.com/embed/${video.message}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin
-                `} 
+                    <div className="overflow-hidden w-[100%] h-[100%]  rounded-t-xl flex items-center justify-center">
+                <iframe className=' w-[100%]  h-[100%]'src={`https://www.youtube.com/embed/${video.message}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin`} 
                 allow="autoplay,encrypted-media"
                 ></iframe>
                     </div>

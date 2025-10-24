@@ -21,8 +21,10 @@ function App() {
   const [previewRandomVideo, setPreviewRandomVideo] = useState<boolean>(false)
   const paginationRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
-  const VIDEOS_PER_PAGE = 24
-  const paginationLength = Math.ceil(data?.data?.length/VIDEOS_PER_PAGE)
+  const VIDEOS_PER_PAGE = 60;
+  const [paginationLength, setPaginationLength] = useState(
+    () => Math.ceil((videos?.length || data?.data?.length || 0) / VIDEOS_PER_PAGE)
+  );
 
 
   function VideoRange(num:number){
@@ -63,6 +65,7 @@ useEffect(() => {
  
   if(filteredVideos.length>VIDEOS_PER_PAGE){
     setVisibilityPagination(true)
+    setPaginationLength(Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE));
     const [start,end] = VideoRange(page)
     setVideos(filteredVideos.slice(start,end))
   }else{
@@ -77,12 +80,14 @@ return (
   {data?
     <>
   <div className="flex justify-around m-5">
-      <button className="hover:cursor-pointer text-white">SceniusTube</button>
+      <button className="text-white">SceniusTube</button>
       <button 
       onClick={()=>{
         const randomPart = document.getElementById('randomPart')
         if(randomPart){
-          randomPart.scrollIntoView({behavior:"smooth"})
+          randomPart.scrollIntoView({behavior:"smooth",
+            block:'center'
+          })
         }
         setPreviewRandomVideo(true)
         }} 
