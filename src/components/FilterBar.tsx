@@ -50,7 +50,7 @@ const isAllActive = (type:'tag'|'creator')=>{
       }
     </div>
 
-    <div className='flex flex-wrap justify-center mb-4 gap-4 lg:flex-nowrap max-w-[1200px] mx-auto px-2'>
+    <div className='flex flex-wrap justify-center mb-4 gap-4 lg:flex-nowrap max-w-[1209px] mx-auto px-2'>
 
         <button onClick={()=>{setCreator(null)}} className={cn(`text-sm text-[#85868d] p-1 rounded-md w-7 cursor-pointer`,isAllActive('creator'))}>
       <img src={selectedCreator?userWhite:userSVg} alt="" />

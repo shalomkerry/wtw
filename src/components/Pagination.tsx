@@ -12,7 +12,7 @@ export function PaginationComponent({ref,paginationLength,page,setPage}:Paginati
 
 return (
   <div className="flex justify-center items-center" ref={ref}>
- <div className="flex items-center justify-center gap-2 my-6 w-2xs bg-neutral-800 px-4 py-2 rounded-lg">
+ <div className="flex items-center justify-center  gap-2 my-6 w-max bg-neutral-800 px-4 py-2 rounded-lg">
   <button
     onClick={() => setPage((p) => Math.max(p - 1, 1))}
     disabled={page === 1}

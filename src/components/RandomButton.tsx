@@ -9,7 +9,7 @@ export function RandomPreview({previewRandomVideo,setPreviewRandomVideo}:randomB
         <div className='bg-[#2C2C2C] max-w-[374px] rounded-3xl px-16 mb-6 py-4  flex flex-col items-center'>
             <h3 className="text-2xl text-white">Couldn't Decide?</h3>
             <p className="text-[#F8F8F8] text-center font-light pt-1 pb-2">Let a random picking function 
-choose your next watch!</p>
+            choose your next watch!</p>
         <div className="flex justify-around m-5">
         <button onClick={()=>{
 
