@@ -9,7 +9,9 @@ import { PaginationComponent } from './components/Pagination.tsx'
 import { getData } from './service/fetch.ts'
 import dice from "./assets/dice-solid-full(1).svg"
 import { inject } from "@vercel/analytics"
+
 function App() {
+
   inject()
   const {data,isLoading} = getData()
   const [videos, setVideos] = useState<Videos[]>([])
@@ -100,6 +102,7 @@ return (
  <div className="" ref={videosRef}>
   <VideoContainer Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
  </div>
+ 
  {videos?.length>0?
  <>
  <RandomVideo videos={data.data} previewRandomVideo={previewRandomVideo} setPreviewRandomVideo={setPreviewRandomVideo} /> 

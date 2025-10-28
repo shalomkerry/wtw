@@ -1,5 +1,6 @@
 import { type Videos } from "../types"
 import { useState } from "react"
+import telegram from '../assets/original.svg'
 interface VideoCardProps{
     video:Videos
 }
@@ -59,19 +60,19 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
         <div className={`rounded-sm text-white shadow transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg  overflow-hidden cursor:pointer ${isHovered?'hover:shadow-neutral-950':''}`}
         onMouseEnter= {()=>setIsHovered(true)} 
         onMouseLeave= {()=>setIsHovered(false)} 
-        onClick={()=>window.open(`https://youtu.be/${video.message}`,'_blank')}
         >
-            <div className="relative">
+            <div className="relative"
+            onClick={()=>window.open(`https://youtu.be/${video.message}`,'_blank')}
+            >
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
                     <img className='rounded-t-xl' src={video?.thumbnail} alt="video-thumbnail"/>
                     </a>
                     <p className="bg-[#00000099] absolute bottom-1  right-1 w-max p-0.5  font-medium text-xs  text-white rounded-xl ">{getExactDuration(video.duration)}</p>
-
+                    
         {isHovered && (
 
                     <a href={`https://youtu.be/${video?.message}`} target="_blank">
                 <div className="absolute inset-0 w-[100%] h-[100%] bg-blend-color bg-opacity-20 flex items-center justify-center">
-
                     <div className="overflow-hidden w-[100%] h-[100%]  rounded-t-xl flex items-center justify-center">
                 <iframe className=' w-[100%]  h-[100%]'src={`https://www.youtube.com/embed/${video.message}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin`} 
                 allow="autoplay,encrypted-media"
@@ -94,7 +95,12 @@ export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
             <p className="text-[15px] self-center">{video?.channel_name}</p>
             <p className="text-[#949494] text-[11px]">{formatViews(Number(video?.subscriber_count))} subscribers</p>
             </div>
-            <div className="flex-row">
+            <div className="flex-row justify-around">
+            {
+                video.post_link?
+            <a href={`https://t.me/${video.post_link}`} target="_blank"><img src={telegram} alt="" className="w-5"/></a>
+                :''
+            }
             </div>
             
             <p></p>

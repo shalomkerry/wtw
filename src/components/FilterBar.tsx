@@ -59,7 +59,7 @@ const isAllActive = (type:'tag'|'creator')=>{
         creators && creators.map((creator)=>{
           const isSelected = creator.name === selectedCreator
           return(
-            <a href={isSelected?creator.link:'#'}
+            <a href={isSelected?creator.link:''}
             key={creator.id}
             onClick={(e)=>{
               if(!isSelected){
