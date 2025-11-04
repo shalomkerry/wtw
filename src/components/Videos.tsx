@@ -3,9 +3,8 @@ import { useState } from "react"
 import telegramSvg from '../assets/original.svg'
 interface VideoCardProps{
     video:Videos
-    selectedCreator:string|null
 }
-export const VideoCard:React.FC<VideoCardProps> = ({video,selectedCreator})=>{
+export const VideoCard:React.FC<VideoCardProps> = ({video})=>{
     const [isHovered,setIsHovered] = useState(false)
 
      if (!video) {

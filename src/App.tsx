@@ -100,7 +100,7 @@ return (
   </div>
  <FilterVideos selectedCreator={selectedCreator} setCreator={setCreator} selectedTag={selectedTag} setSelectedTag={setSelectedTag}/> 
  <div className="" ref={videosRef}>
-  <VideoContainer selectedCreator={selectedCreator} Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
+  <VideoContainer  Loading={Loading} videos={videos} previewRandomVideo={previewRandomVideo}/>
  </div>
  
  {videos?.length>0?
