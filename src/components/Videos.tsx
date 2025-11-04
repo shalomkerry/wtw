@@ -99,15 +99,12 @@ export const VideoCard:React.FC<VideoCardProps> = ({video,selectedCreator})=>{
                 
             </div>
             <div className="flex-row justify-around">
-            {selectedCreator==null?
             <button className='text-[12px] bg-[#141414] justify-between mt-2 text-white hover:scale-110 rounded-[2px] '>
                 {video.post_link!=''?
                 <a href={`https://t.me/${video.post_link}`} target="_blank" className="hover:scale-200">
                     <img src={telegramSvg}  className='w-4 hover:scale-110 ' alt="logo image" />
                     {/* {video?.creator} */}
                 </a>:''}</button>
-            :''
-            }
             </div>
             
             <p></p>
